@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 
-Sprite::Sprite(const char* fileName)
+Sprite::Sprite(const char* fileName, bool isLoop)
 {	
 	_frameDuration = 0;
 	_aniSpeed = 10000 / 60; // 60 -> Fps
@@ -67,6 +67,17 @@ Sprite::Sprite(const char* fileName)
 	}
 
 	_frame = 0;
+
+	_isLoop = isLoop;
+	if (_isLoop)
+	{
+		_isPlay = true;
+	}
+
+	else
+	{
+		_isPlay = false;
+	}
 }
 
 Sprite::~Sprite()
@@ -76,17 +87,32 @@ Sprite::~Sprite()
 
 void Sprite::Render()
 {
+	if (_isPlay == false)
+		return;
+
 	_textureFrame->Get(_frame)->Render();
 }
 
 void Sprite::Update(int deltaTime)
 {
+	if (_isPlay == false)
+	{
+		return;
+	}
+
 	_frameDuration += deltaTime;
 	if (_aniSpeed < _frameDuration)
 	{
 		_frameDuration = 0;
 		_frame = (_frame + 1) % _frameMaxCount;
-	
+
+		if (_isLoop == false)
+		{
+			if (_frame == 0)
+			{
+				_isPlay = false;
+			 }
+		}
 	}
 
 	Texture* texture = _textureFrame->Get(_frame);
@@ -101,4 +127,11 @@ void Sprite::SetPosition(int x, int y)
 
 	Texture* texture = _textureFrame->Get(_frame);
 	texture->SetPosition(_x, _y);
+}
+
+void Sprite::Play()
+{
+	_frame = 0;
+	_isPlay = true;
+
 }

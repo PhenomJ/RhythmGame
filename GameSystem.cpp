@@ -16,14 +16,14 @@ GameSystem* GameSystem::GetInstance()
 	return _Instance;
 }
 
-int GameSystem::GetWindowWidth(int width)
+int GameSystem::GetWindowWidth()
 {
-	return width;
+	return 1024;
 }
 
-int GameSystem::GetWindowHeight(int height)
+int GameSystem::GetWindowHeight()
 {
-	return height;
+	return 800;
 }
 
 void GameSystem::SetRenderer(SDL_Renderer* sdlRenderer)

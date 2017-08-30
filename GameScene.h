@@ -20,4 +20,9 @@ public:
 	void Render();
 	void Deinit();
 	void Init();
+
+	//input
+public:
+	void KeyDown(int keydown);
+	void KeyUp(int keyup);
 };

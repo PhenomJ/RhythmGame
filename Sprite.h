@@ -12,13 +12,15 @@ private:
 	int _aniSpeed;
 	int _x;
 	int _y;
-	
+	bool _isLoop;
+	bool _isPlay;
 
 public :
 	void Render();
 	void Update(int deltaTime);
 	void SetPosition(int x, int y);
+	void Play();
 public:
-	Sprite(const char* fileName);
+	Sprite(const char* fileName, bool isLoop);
 	~Sprite();
 };

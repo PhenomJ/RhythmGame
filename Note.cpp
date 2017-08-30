@@ -7,6 +7,7 @@ Note::Note(float sec, int judgedeltaLine)
 	_noteSprite = NULL;
 	_startTick = GameSystem::GetInstance()->GameTimeTick() - (int)(sec * 1000.0f);
 	_judgeDeltaLine = judgedeltaLine;
+	_isPass = false;
 }
 
 Note::~Note()
@@ -31,7 +32,7 @@ void Note::UpdatePosition(int deltaTime)
 		float positionRate = (float)_updateDuration / (float)gameTimeTick;
 		float positionInSec = trackHeight * positionRate;
 
-		_y = positionInSec - (trackHeight - GameSystem::GetInstance()->GetWindowHeight(800) + _judgeDeltaLine);
+		_y = positionInSec - (trackHeight - GameSystem::GetInstance()->GetWindowHeight() + _judgeDeltaLine);
 	}
 
 	else
@@ -56,8 +57,8 @@ void Note::Render()
 
 void Note::Init()
 {
-	_noteSprite = new Sprite("SpriteScript.csv"); // Texture 持失 企端
-	_x = GameSystem::GetInstance()->GetWindowWidth(1024) / 2;
+	_noteSprite = new Sprite("SpriteScript.csv", true); // Texture 持失 企端
+	_x = GameSystem::GetInstance()->GetWindowWidth() / 2;
 
 	int gameTimeTick = GameSystem::GetInstance()->GameTimeTick();
 	_isLive = true;
@@ -78,4 +79,19 @@ void Note::Deinit()
 bool Note::IsLive()
 {
 	return _isLive;
+}
+
+int Note::GetNoteTime()
+{
+	return _updateDuration;
+}
+
+bool Note::isPass()
+{
+	return _isPass;
+}
+
+void Note::Pass()
+{
+	_isPass = true;
 }

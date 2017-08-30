@@ -13,6 +13,7 @@ private:
 	int _x;
 	int _y;
 	int _judgeDeltaLine;
+	bool _isPass;
 
 public :
 	Note(float sec, int judgedeltaTime);
@@ -24,5 +25,8 @@ public:
 	void Init();
 	void Deinit();
 	bool IsLive();
+	int GetNoteTime();
+	bool isPass();
+	void Pass();
 
 };

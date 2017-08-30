@@ -5,12 +5,22 @@
 class Sprite;
 class Note;
 
+enum eJudge
+{
+	NONE,
+	JUDGE,
+	FAIL
+};
+
 class Track : public GameObject
 {
 private:
 	Sprite* _trackSprite;
 	Sprite* _JudgeSprite;
+	Sprite* _Destory;
 	DLinkedList<Note*> _noteList;
+	bool _isKeyDown;
+	eJudge _judge;
 
 public:
 	Track();
@@ -20,4 +30,9 @@ public:
 	void Render();
 	void Deinit();
 	void Init();
+
+	//input
+public:
+	void KeyDown();
+	void KeyUp();
 };

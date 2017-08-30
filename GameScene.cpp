@@ -2,6 +2,7 @@
 #include "Track.h"
 #include "Sprite.h"
 #include "GameSystem.h"
+#include "SDL_mixer.h"
 #include <stdio.h>
 
 GameScene::GameScene()
@@ -45,9 +46,45 @@ void GameScene::Deinit()
 
 void GameScene::Init()
 {
-	_backgroundSprite = new Sprite("BackGroundSprite.csv");
-	_backgroundSprite->SetPosition(GameSystem::GetInstance()->GetWindowWidth(1024) / 2, GameSystem::GetInstance()->GetWindowHeight(800) / 2);
+	_backgroundSprite = new Sprite("BackGroundSprite.csv", true);
+	_backgroundSprite->SetPosition(GameSystem::GetInstance()->GetWindowWidth() / 2, GameSystem::GetInstance()->GetWindowHeight() / 2);
 	_track = new Track();
 	_track->Init();
 	_gameDuration = 0;
+
+	int result = Mix_Init(MIX_INIT_MP3);
+	if (MIX_INIT_MP3 == result)
+	{
+		Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
+		Mix_Music* music = Mix_LoadMUS("../Resource/Music/SadStory.mp3");
+		if (music != NULL)
+		{
+			Mix_PlayMusic(music, 0);
+		}
+	}
+
+	else
+	{
+		printf("File Open Error (.mp3)");
+	}
+}
+
+void GameScene::KeyDown(int keydown)
+{
+	switch (keydown)
+	{
+	case SDLK_SPACE:
+			_track->KeyDown();
+			break;
+	}
+}
+
+void GameScene::KeyUp(int keyup)
+{
+	switch (keyup)
+	{
+	case SDLK_SPACE:
+		_track->KeyUp();
+		break;
+	}
 }

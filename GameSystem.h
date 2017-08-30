@@ -12,8 +12,8 @@ private:
 	
 public:
 	static GameSystem* GetInstance();
-	int GetWindowWidth(int width);
-	int GetWindowHeight(int height);
+	int GetWindowWidth();
+	int GetWindowHeight();
 
 	//Gameinfo
 private:
