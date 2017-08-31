@@ -9,6 +9,8 @@ class GameScene : public GameObject
 {
 private:
 	Track* _track;
+	Track* _track1;
+	Track* _track2;
 	Sprite* _backgroundSprite;
 	int _gameDuration;
 public:

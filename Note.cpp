@@ -19,6 +19,7 @@ void Note::Update(int deltaTime)
 {
 	_noteSprite->Update(deltaTime);
 	UpdatePosition(deltaTime);
+	
 	_noteSprite->SetPosition(_x, _y);
 }
 
@@ -94,4 +95,10 @@ bool Note::isPass()
 void Note::Pass()
 {
 	_isPass = true;
+}
+
+void Note::SetPosition(int x)
+{
+	_x = x;
+	int y = _x;
 }

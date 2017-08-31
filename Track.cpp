@@ -12,6 +12,8 @@ Track::Track()
 	_isKeyDown = false;
 	_Destory = NULL;
 	_judge = eJudge::NONE;
+	_combo = 0;
+	
 }
 Track::~Track()
 {
@@ -43,11 +45,21 @@ void Track::Update(int deltaTime)
 		{
 			itr.Item()->Pass();
 			_judge = eJudge::FAIL;
+ 			_combo = 0;
+			
+			switch (_judge)
+			{
+			case FAIL:
+				break;
+			}
 		}
+
+		
 	}
 
 
 	_JudgeSprite->Update(deltaTime);
+	
 	_Destory->Update(deltaTime);
 }
 
@@ -60,6 +72,7 @@ void Track::Render()
 		itr.Item()->Render();
 	}
 	_JudgeSprite->Render();
+	
 	_Destory->Render();
 }
 
@@ -91,18 +104,17 @@ void Track::Deinit()
 		delete _Destory;
 		_Destory = NULL;
 	}
+
+	
 }
 
 void Track::Init()
 {
-	int judgedeltaLine = 300;
 	_trackSprite = new Sprite("track.csv", true);
 	_JudgeSprite = new Sprite("JudgeLine.csv", true);
-	_trackSprite->SetPosition(GameSystem::GetInstance()->GetWindowWidth() / 2, GameSystem::GetInstance()->GetWindowHeight() / 2);
-	_JudgeSprite->SetPosition(GameSystem::GetInstance()->GetWindowWidth() / 2, GameSystem::GetInstance()->GetWindowHeight() / 2 + judgedeltaLine);
-
 	_Destory = new Sprite("Destory.csv", false);
-	_Destory->SetPosition(GameSystem::GetInstance()->GetWindowWidth() / 2, GameSystem::GetInstance()->GetWindowHeight() / 2 + judgedeltaLine);
+	
+	
 
 	int gameTime = GameSystem::GetInstance()->GameTimeTick();
 	//float sec = 0.0f;
@@ -136,9 +148,9 @@ void Track::Init()
 		noteTick += deltaTick;
 
 		float sec = (float)noteTick / 1000.0f;
-		Note* note = new Note(sec, judgedeltaLine);
-		note->Init();
-		_noteList.Append(note);
+		_note = new Note(sec, _judgedeltaLine);
+		_note->Init();
+		_noteList.Append(_note);
 	}
 	
 }
@@ -155,7 +167,6 @@ void Track::KeyDown()
 	int judgeTick = GameSystem::GetInstance()->GameTimeTick();
 	int judgeStartTick = judgeTick - 100;
 	int judgeEndTick = judgeTick + 300;
-	//bool isJudge = false;
 
 	DLinkedListIterator<Note*> itr = _noteList.GetIterator();
 	for (itr.Start(); itr.Valid(); itr.Forth())
@@ -173,6 +184,7 @@ void Track::KeyDown()
 		}
 
 		
+
 	}
 
 	switch (_judge)
@@ -186,14 +198,19 @@ void Track::KeyDown()
 		break;
 	}
 
-	/*if (isJudge == true)
-	{
-		_Destory->Play();
-		_noteList.Remove(itr);
-	}*/
+	_judge = NONE;
+
 }
 
 void Track::KeyUp()
 {
 	_isKeyDown = false;
+}
+
+void Track::SetPosition(int x, int y)
+{
+	_trackSprite->SetPosition(x, y);
+	_JudgeSprite->SetPosition(x, y + _judgedeltaLine);
+	_Destory->SetPosition(x, y + _judgedeltaLine);
+	_note->SetPosition(x);
 }

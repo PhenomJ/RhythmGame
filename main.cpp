@@ -65,6 +65,17 @@ int main(int argc, char* argv[])
 					{
 						gameScene->KeyUp(SDLK_SPACE);
 					}
+
+					if (sdlEvent.key.keysym.sym == SDLK_s)
+					{
+						gameScene->KeyUp(SDLK_s);
+					}
+
+					if (sdlEvent.key.keysym.sym == SDLK_k)
+					{
+						gameScene->KeyUp(SDLK_k);
+					}
+
 				}
 
 				if (SDL_KEYDOWN == sdlEvent.type)
@@ -72,6 +83,16 @@ int main(int argc, char* argv[])
 					if (sdlEvent.key.keysym.sym == SDLK_SPACE)
 					{
 						gameScene->KeyDown(SDLK_SPACE);
+					}
+
+					if (sdlEvent.key.keysym.sym == SDLK_s)
+					{
+						gameScene->KeyDown(SDLK_s);
+					}
+
+					if (sdlEvent.key.keysym.sym == SDLK_k)
+					{
+						gameScene->KeyDown(SDLK_k);
 					}
 				}
 

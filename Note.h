@@ -28,5 +28,5 @@ public:
 	int GetNoteTime();
 	bool isPass();
 	void Pass();
-
+	void SetPosition(int x);
 };

@@ -21,6 +21,9 @@ private:
 	DLinkedList<Note*> _noteList;
 	bool _isKeyDown;
 	eJudge _judge;
+	int _judgedeltaLine = 300;
+	int _combo;
+	Note* _note;
 
 public:
 	Track();
@@ -30,7 +33,7 @@ public:
 	void Render();
 	void Deinit();
 	void Init();
-
+	void SetPosition(int x, int y);
 	//input
 public:
 	void KeyDown();
